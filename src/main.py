@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from .settings import load_settings
 from .routes import routers
 
 
@@ -18,8 +17,3 @@ def create_app():
 
 
 app = create_app()
-
-
-@app.on_event("startup")
-async def startup():
-    await load_settings()

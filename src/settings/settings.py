@@ -1,5 +1,5 @@
-from typing import Optional
 from pydantic import BaseSettings
+from functools import lru_cache
 
 
 class ProjectDatabase(BaseSettings):
@@ -14,7 +14,7 @@ class ProjectDatabase(BaseSettings):
 class ProjectAuthentication(BaseSettings):
     secret: str
     algorithm: str
-    sub: str
+    expiration: int
 
 
 class ProjectSettings(BaseSettings):
@@ -27,16 +27,6 @@ class ProjectSettings(BaseSettings):
         case_sensitive: False
 
 
-__settings: Optional[ProjectSettings] = None
-
-
-async def load_settings() -> Optional[ProjectSettings]:
-    global __settings
-    __settings = ProjectSettings()
-
-
-async def get_settings() -> Optional[ProjectSettings]:
-    global __settings
-    if not __settings:
-        raise Exception("Project settings are not loaded")
-    return __settings
+@lru_cache
+def get_settings() -> ProjectSettings:
+    return ProjectSettings()
