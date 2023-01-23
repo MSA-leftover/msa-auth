@@ -1,12 +1,23 @@
 from fastapi import FastAPI
-from src.settings.settings import load_settings
+from .settings import load_settings
+from .routes import routers
 
-app = FastAPI()
+
+def create_app():
+    """FastAPI 앱 생성
+
+    Returns:
+        _type_: FastAPI
+    """
+    app = FastAPI()
+
+    for router in routers:
+        app.include_router(router)
+
+    return app
 
 
-@app.get("/")
-async def main_route():
-    return {"message": "Hello, World!"}
+app = create_app()
 
 
 @app.on_event("startup")
