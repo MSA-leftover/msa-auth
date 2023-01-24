@@ -1,7 +1,11 @@
 from fastapi import APIRouter, HTTPException, Depends
-from ..services.user_service import authenticate_user, validate_token, create_user
-from ..services.jwt_service import create_access_token
-from ..connections.redis import redis_client
+from ..services import (
+    authenticate_user,
+    validate_token,
+    create_user,
+    create_access_token,
+)
+from ..connections import redis_client
 
 
 router = APIRouter()

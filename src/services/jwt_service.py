@@ -1,7 +1,7 @@
 from ..settings import get_settings, ProjectSettings
 import datetime
 from jose import jwt
-from ..connections.redis import redis_client
+from ..connections import redis_client
 
 settings: ProjectSettings = get_settings()
 
